@@ -5,4 +5,5 @@ MetaRTC is a cross-platform webRTC SDK, more suitable for embedded/Internet of T
 但是原始工程关联QT，以及各种编译方面不太适合初学者，所以我这里重新fork仓库，改成适合学习的版本。
 
 ## 编译
-待更新
+### windows 环境
+cmake_win64.bat
