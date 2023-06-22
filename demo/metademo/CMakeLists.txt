@@ -1,0 +1,5 @@
+cmake_minimum_required(VERSION 3.10)
+project(metademo LANGUAGES CXX)
+file(GLOB sources *.cpp *.h)
+add_executable(metademo ${sources})
+target_link_libraries(metademo metartccore6 metartc6)

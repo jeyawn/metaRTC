@@ -1,25 +1,25 @@
-cmake_minimum_required(VERSION 2.8)
+cmake_minimum_required(VERSION 3.10)
 project(libmetartccore6)
-add_definitions(-D__STDC_FORMAT_MACROS)
+add_definitions(-D__STDC_FORMAT_MACROS -DHAVE_STRUCT_TIMESPEC -DWIN32_LEAN_AND_MEAN)
 
 
-set(CMAKE_BUILD_TYPE "RELEASE")
+#set(CMAKE_BUILD_TYPE "RELEASE")
 
-set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -O2 -std=gnu11")
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -O2 -std=gnu++11")
-set(HOME_BASE "../")
+#set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -O2 -std=gnu11")
+#set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -O2 -std=gnu++11")
+#set(HOME_BASE "../")
 
 # 头文件目录
-include_directories(${HOME_BASE}/include)
-include_directories(${HOME_BASE}/thirdparty/include)
-include_directories(${HOME_BASE}/thirdparty/user_include)
-include_directories(${HOME_BASE}/thirdparty/user_include/gmssl)
-include_directories(${HOME_BASE}/thirdparty/user_include/mbedtls3)
+include_directories(${CMAKE_SOURCE_DIR}/include)
+include_directories(${CMAKE_SOURCE_DIR}/thirdparty/include)
+include_directories(${CMAKE_SOURCE_DIR}/thirdparty/user_include)
+include_directories(${CMAKE_SOURCE_DIR}/thirdparty/user_include/gmssl)
+include_directories(${CMAKE_SOURCE_DIR}/thirdparty/user_include/mbedtls3)
 if (CMAKE_SYSTEM_NAME MATCHES "Windows")
 add_definitions(-D_TIMESPEC_DEFINED)
-include_directories(${HOME_BASE}/thirdparty/include/win/include)
+include_directories(${CMAKE_SOURCE_DIR}/thirdparty/include/win/include)
 endif()
-include_directories(${HOME_BASE}/libmetartccore6/src)
+include_directories(${CMAKE_SOURCE_DIR}/libmetartccore6/src)
 
 
 # 发现目录下的源文件
