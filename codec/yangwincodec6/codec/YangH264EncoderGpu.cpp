@@ -11,7 +11,9 @@ YangH264EncoderGpu::YangH264EncoderGpu(YangVideoInfo* pcontext,YangVideoEncInfo*
     m_context=pcontext;
     m_enc=enc;
     m_format=pcontext->videoEncoderFormat;
+    #ifdef SUPPORT_QSVENCODER
     if(m_context->videoEncHwType==YangV_Hw_Intel) codec_="h264_qsv";
+    #endif
     if(m_context->videoEncHwType==YangV_Hw_Nvdia) codec_="h264_nvenc";
     m_outBuf=NULL;
     m_inBuf=NULL;
@@ -55,6 +57,7 @@ bool YangH264EncoderGpu::init()
 			}
 		}
 	}
+    #ifdef SUPPORT_QSVENCODER
 	else if (codec_ == "h264_qsv") {
 		if (QsvEncoder::IsSupported()) {
 			QsvParams qsv_params;
@@ -69,6 +72,7 @@ bool YangH264EncoderGpu::init()
 			}
 		}
 	}
+    #endif
 
 	return true;
 }
@@ -79,10 +83,11 @@ void YangH264EncoderGpu::Destroy()
 		nvenc_info.destroy(&nvenc_data_);
 		nvenc_data_ = nullptr;
 	}
-
+    #ifdef SUPPORT_QSVENCODER
 	if (qsv_encoder_.IsInitialized()) {
 		qsv_encoder_.Destroy();
 	}
+    #endif
 
 }
 bool YangH264EncoderGpu::isSuported(){
@@ -137,11 +142,13 @@ int YangH264EncoderGpu::encode(YangFrame* pframe)
 
         frame_size = nvenc_info.encode_texture(nvenc_data_, texture, m_outBuf, inLength);
 	}
+    #ifdef SUPPORT_QSVENCODER
 	else if (qsv_encoder_.IsInitialized()) {
 
 
         frame_size = qsv_encoder_.Encode(pframe->payload, m_context->width, m_context->height, m_outBuf, max_buffer_size);
 	}
+    #endif
   if(frame_size<4) return 0;
 
     if(isKeyFrame(m_outBuf,frame_size)){
@@ -176,9 +183,11 @@ int YangH264EncoderGpu::GetSequenceParams(uint8_t* out_buffer, int out_buffer_si
 	if (nvenc_data_ != nullptr) {
 		size = nvenc_info.get_sequence_params(nvenc_data_, (uint8_t*)out_buffer, out_buffer_size);
 	}
+    #ifdef SUPPORT_QSVENCODER
 	else if (qsv_encoder_.IsInitialized()) {
 		size = qsv_encoder_.GetSequenceParams((uint8_t*)out_buffer, out_buffer_size);
 	}
+    #endif
 
 
 	return size;

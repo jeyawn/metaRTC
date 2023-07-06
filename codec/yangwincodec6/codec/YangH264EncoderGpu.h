@@ -2,7 +2,9 @@
 // Copyright (c) 2019-2022 yanggaofeng
 //
 #include "NvCodec/nvenc.h"
+#ifdef SUPPORT_QSVENCODER
 #include "QsvCodec/QsvEncoder.h"
+#endif
 #include <yangutil/yangavinfotype.h>
 #include <string>
 
@@ -32,7 +34,9 @@ private:
     uint8_t* m_outBuf;
     uint8_t* m_inBuf;
 	void* nvenc_data_ = nullptr;
+    #ifdef SUPPORT_QSVENCODER
 	QsvEncoder qsv_encoder_;
+    #endif
     YangVideoInfo* m_context;
     YangVideoEncInfo* m_enc;
     YangYuvType m_format;

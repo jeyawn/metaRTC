@@ -1,6 +1,5 @@
-/*
+﻿/*
  * rational numbers
- * Copyright (c) 2003 Michael Niedermayer <michaelni@gmx.at>
  *
  * This file is part of FFmpeg.
  *
@@ -19,12 +18,12 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
  */
 
-/**
- * @file
- * @ingroup lavu_math_rational
- * Utilties for rational number calculation.
- * @author Michael Niedermayer <michaelni@gmx.at>
- */
+ /**
+  * @file
+  * @ingroup lavu_math_rational
+  * Utilties for rational number calculation.
+  * @author Michael Niedermayer <michaelni@gmx.at>
+  */
 
 #ifndef AVUTIL_RATIONAL_H
 #define AVUTIL_RATIONAL_H
@@ -33,31 +32,31 @@
 #include <limits.h>
 #include "attributes.h"
 
-/**
- * @defgroup lavu_math_rational AVRational
- * @ingroup lavu_math
- * Rational number calculation.
- *
- * While rational numbers can be expressed as floating-point numbers, the
- * conversion process is a lossy one, so are floating-point operations. On the
- * other hand, the nature of FFmpeg demands highly accurate calculation of
- * timestamps. This set of rational number utilities serves as a generic
- * interface for manipulating rational numbers as pairs of numerators and
- * denominators.
- *
- * Many of the functions that operate on AVRational's have the suffix `_q`, in
- * reference to the mathematical symbol "ℚ" (Q) which denotes the set of all
- * rational numbers.
- *
- * @{
- */
+  /**
+   * @defgroup lavu_math_rational AVRational
+   * @ingroup lavu_math
+   * Rational number calculation.
+   *
+   * While rational numbers can be expressed as floating-point numbers, the
+   * conversion process is a lossy one, so are floating-point operations. On the
+   * other hand, the nature of FFmpeg demands highly accurate calculation of
+   * timestamps. This set of rational number utilities serves as a generic
+   * interface for manipulating rational numbers as pairs of numerators and
+   * denominators.
+   *
+   * Many of the functions that operate on AVRational's have the suffix `_q`, in
+   * reference to the mathematical symbol "ℚ" (Q) which denotes the set of all
+   * rational numbers.
+   *
+   * @{
+   */
 
-/**
- * Rational number (pair of numerator and denominator).
- */
-typedef struct AVRational{
-    int num; ///< Numerator
-    int den; ///< Denominator
+   /**
+	* Rational number (pair of numerator and denominator).
+	*/
+typedef struct AVRational {
+	int num; ///< Numerator
+	int den; ///< Denominator
 } AVRational;
 
 /**
@@ -70,8 +69,8 @@ typedef struct AVRational{
  */
 static inline AVRational av_make_q(int num, int den)
 {
-    AVRational r = { num, den };
-    return r;
+	AVRational r = { num, den };
+	return r;
 }
 
 /**
@@ -86,13 +85,13 @@ static inline AVRational av_make_q(int num, int den)
  *         - -1 if `a < b`
  *         - `INT_MIN` if one of the values is of the form `0 / 0`
  */
-static inline int av_cmp_q(AVRational a, AVRational b){
-    const int64_t tmp= a.num * (int64_t)b.den - b.num * (int64_t)a.den;
+static inline int av_cmp_q(AVRational a, AVRational b) {
+	const int64_t tmp = a.num * (int64_t)b.den - b.num * (int64_t)a.den;
 
-    if(tmp) return (int)((tmp ^ a.den ^ b.den)>>63)|1;
-    else if(b.den && a.den) return 0;
-    else if(a.num && b.num) return (a.num>>31) - (b.num>>31);
-    else                    return INT_MIN;
+	if (tmp) return (int)((tmp ^ a.den ^ b.den) >> 63) | 1;
+	else if (b.den && a.den) return 0;
+	else if (a.num && b.num) return (a.num >> 31) - (b.num >> 31);
+	else                    return INT_MIN;
 }
 
 /**
@@ -101,8 +100,8 @@ static inline int av_cmp_q(AVRational a, AVRational b){
  * @return `a` in floating-point form
  * @see av_d2q()
  */
-static inline double av_q2d(AVRational a){
-    return a.num / (double) a.den;
+static inline double av_q2d(AVRational a) {
+	return a.num / (double)a.den;
 }
 
 /**
@@ -117,7 +116,7 @@ static inline double av_q2d(AVRational a){
  * @param[in]      max Maximum allowed values for `dst_num` & `dst_den`
  * @return 1 if the operation is exact, 0 otherwise
  */
-int av_reduce(int *dst_num, int *dst_den, int64_t num, int64_t den, int64_t max);
+int av_reduce(int* dst_num, int* dst_den, int64_t num, int64_t den, int64_t max);
 
 /**
  * Multiply two rationals.
@@ -158,8 +157,8 @@ AVRational av_sub_q(AVRational b, AVRational c) av_const;
  */
 static av_always_inline AVRational av_inv_q(AVRational q)
 {
-    AVRational r = { q.den, q.num };
-    return r;
+	AVRational r = { q.den, q.num };
+	return r;
 }
 
 /**

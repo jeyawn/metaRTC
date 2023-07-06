@@ -1,7 +1,7 @@
 
 @echo off
 set TARGET_OS=Windows
-set TARGET_ARCH=x64
+set TARGET_ARCH=Win32
 
 del build /q
 mkdir build

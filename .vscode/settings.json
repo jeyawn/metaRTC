@@ -1,0 +1,6 @@
+{
+    "files.associations": {
+        "yangsctp.h": "c",
+        "usrsctp.h": "c"
+    }
+}
