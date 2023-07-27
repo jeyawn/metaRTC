@@ -8,4 +8,4 @@ https://github.com/metartc/metaRTC
 ## 编译
 ### windows 环境
 安装VS2019 社区版，cmake 等项目依赖，然后直接执行脚本
-cmake_win64.bat
+cmake_win32.bat
